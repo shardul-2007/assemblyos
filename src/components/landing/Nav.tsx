@@ -32,12 +32,10 @@ export function Nav() {
         }}
       >
         <div className="flex items-center justify-between px-5 h-14">
-          {/* Logo */}
           <Link href="/" aria-label="AssemblyOS home">
             <AssemblyOSLogo size={28} />
           </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
@@ -57,7 +55,6 @@ export function Nav() {
               </GlowButton>
             </Link>
 
-            {/* Mobile menu toggle */}
             <button
               className="md:hidden p-2 rounded-lg text-[rgba(245,247,250,0.58)] hover:text-[#F5F7FA]"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -69,12 +66,10 @@ export function Nav() {
           </div>
         </div>
 
-        {/* Mobile nav */}
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
             className="md:hidden border-t border-[rgba(255,255,255,0.06)] px-5 py-4 flex flex-col gap-3"
           >
             {navLinks.map((link) => (

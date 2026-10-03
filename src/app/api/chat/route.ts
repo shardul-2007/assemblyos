@@ -34,8 +34,6 @@ export async function POST(req: NextRequest) {
     // Real AI mode (when key exists)
     try {
       const { buildContextMessage, SYSTEM_PROMPT } = await import('@/lib/ai/prompts');
-
-      // Dynamic import to avoid build errors when packages absent
       const { createOpenAI } = await import('@ai-sdk/openai');
       const { generateText } = await import('ai');
 
@@ -56,24 +54,21 @@ export async function POST(req: NextRequest) {
           { role: 'user', content: contextMessage },
           ...messages,
         ],
-        maxTokens: 600,
       });
 
-      // Try to parse JSON structured response
-      let parsed: { message: string; actions?: unknown[] };
+      let parsedResponse: { message: string; actions?: unknown[] };
       try {
-        parsed = JSON.parse(result.text);
+        parsedResponse = JSON.parse(result.text);
       } catch {
-        parsed = { message: result.text, actions: [] };
+        parsedResponse = { message: result.text, actions: [] };
       }
 
       return NextResponse.json({
-        message: parsed.message,
-        actions: parsed.actions ?? [],
+        message: parsedResponse.message,
+        actions: parsedResponse.actions ?? [],
         mode: 'ai',
       });
     } catch (aiError) {
-      // Fallback gracefully
       console.error('AI call failed, falling back to demo:', aiError);
       const response = await demoAssistantResponse(lastUserMessage, { currentStep, selectedComponent });
       return NextResponse.json({
