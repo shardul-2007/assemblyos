@@ -26,6 +26,7 @@ interface ProductAssemblyStore {
   showCamera: boolean;
   isAnalyzing: boolean;
   capturedImageUrl: string | null;
+  capturedImageHint: string | null;
   analysisResult: AIProductAnalysis | null;
   showAnalysisModal: boolean;
   showExportModal: boolean;
@@ -57,7 +58,7 @@ interface ProductAssemblyStore {
   // Actions — Camera & Analysis
   openCamera: () => void;
   closeCamera: () => void;
-  setCapturedImage: (url: string | null) => void;
+  setCapturedImage: (url: string | null, hint?: string) => void;
   setIsAnalyzing: (v: boolean) => void;
   setAnalysisResult: (res: AIProductAnalysis | null) => void;
   openAnalysisModal: () => void;
@@ -84,6 +85,7 @@ export const useProductAssemblyStore = create<ProductAssemblyStore>()(
     showCamera: false,
     isAnalyzing: false,
     capturedImageUrl: null,
+    capturedImageHint: null,
     analysisResult: null,
     showAnalysisModal: false,
     showExportModal: false,
@@ -189,7 +191,7 @@ export const useProductAssemblyStore = create<ProductAssemblyStore>()(
 
     openCamera: () => set({ showCamera: true }),
     closeCamera: () => set({ showCamera: false }),
-    setCapturedImage: (url) => set({ capturedImageUrl: url }),
+    setCapturedImage: (url, hint) => set({ capturedImageUrl: url, capturedImageHint: hint ?? null }),
     setIsAnalyzing: (v) => set({ isAnalyzing: v }),
     setAnalysisResult: (res) => set({ analysisResult: res }),
     openAnalysisModal: () => set({ showAnalysisModal: true }),

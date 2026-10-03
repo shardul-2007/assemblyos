@@ -76,9 +76,9 @@ export default function WorkspacePage() {
   }, [undo, redo, toggleExploded]);
 
   // When photo is taken from real camera or uploaded
-  const handlePhotoCaptured = async (dataUrl: string) => {
+  const handlePhotoCaptured = async (dataUrl: string, hint?: string) => {
     closeCamera();
-    setCapturedImage(dataUrl);
+    setCapturedImage(dataUrl, hint);
 
     // If a part was selected, attach this photo to that part
     if (selectedPartId) {
@@ -95,8 +95,8 @@ export default function WorkspacePage() {
     setIsAnalyzing(false);
     if (!capturedImageUrl) return;
 
-    // Run real/demo product vision service with captured image
-    const result = await analyzeProductImage(capturedImageUrl);
+    // Run real/demo product vision service with captured image and hints
+    const result = await analyzeProductImage(capturedImageUrl, useProductAssemblyStore.getState().capturedImageHint ?? undefined);
     setAnalysisResult(result);
     openAnalysisModal();
   };

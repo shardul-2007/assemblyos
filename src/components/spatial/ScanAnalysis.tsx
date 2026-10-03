@@ -6,12 +6,12 @@ import { TechnicalLabel } from '@/components/ui/TechnicalLabel';
 
 const ANALYSIS_STAGES = [
   'Image received',
-  'Detecting objects',
-  'Identifying equipment',
-  'Reading visible labels',
-  'Estimating spatial relationships',
-  'Building semantic scene',
-  'Updating digital twin',
+  'Analyzing product features',
+  'Detecting visible components',
+  'Inferring internal subsystems',
+  'Querying 3D reference library',
+  'Validating component hierarchy',
+  'Preparing 3D assembly result',
 ];
 
 interface ScanAnalysisProps {
@@ -27,7 +27,7 @@ export function ScanAnalysis({ onComplete, isDemo = true }: ScanAnalysisProps) {
       const t = setTimeout(onComplete, 400);
       return () => clearTimeout(t);
     }
-    const delay = stageIdx === 0 ? 300 : 500 + Math.random() * 300;
+    const delay = stageIdx === 0 ? 300 : 450 + Math.random() * 250;
     const t = setTimeout(() => setStageIdx((i) => i + 1), delay);
     return () => clearTimeout(t);
   }, [stageIdx, onComplete]);
@@ -44,12 +44,12 @@ export function ScanAnalysis({ onComplete, isDemo = true }: ScanAnalysisProps) {
       >
         <div className="text-center mb-6">
           <TechnicalLabel className="block mb-1.5" variant={isDemo ? 'warning' : 'accent'}>
-            {isDemo ? 'DEMO ANALYSIS' : 'AI VISION ANALYSIS'}
+            {isDemo ? 'DEMO VISION PIPELINE' : 'AI MULTI-MODAL VISION'}
           </TechnicalLabel>
-          <h3 className="text-[20px] font-bold text-[#F5F7FA]">ANALYZING SPACE</h3>
+          <h3 className="text-[20px] font-bold text-[#F5F7FA]">ANALYZING PRODUCT</h3>
           {isDemo && (
             <p className="font-mono text-[11px] text-[rgba(245,247,250,0.4)] mt-1">
-              Deterministic local analysis — no external API key required
+              Local vision pipeline — evaluating actual image features
             </p>
           )}
         </div>

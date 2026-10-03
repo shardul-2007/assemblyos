@@ -7,7 +7,7 @@ import { TechnicalLabel } from '@/components/ui/TechnicalLabel';
 import { cn } from '@/lib/utils';
 
 interface CameraScannerProps {
-  onCapture: (dataUrl: string) => void;
+  onCapture: (dataUrl: string, hint?: string) => void;
   onClose: () => void;
   forObjectName?: string;
 }
@@ -101,21 +101,25 @@ export function CameraScanner({ onCapture, onClose, forObjectName }: CameraScann
     stopStream();
   }, [stopStream]);
 
+  const [capturedHint, setCapturedHint] = useState<string | undefined>(undefined);
+
   const handleRetake = useCallback(() => {
     setCapturedUrl(null);
+    setCapturedHint(undefined);
     setState('requesting');
     startCamera(facingMode);
   }, [facingMode, startCamera]);
 
   const handleConfirm = useCallback(() => {
     if (capturedUrl) {
-      onCapture(capturedUrl);
+      onCapture(capturedUrl, capturedHint);
     }
-  }, [capturedUrl, onCapture]);
+  }, [capturedUrl, capturedHint, onCapture]);
 
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setCapturedHint(file.name);
     const reader = new FileReader();
     reader.onload = (ev) => {
       const url = ev.target?.result as string;
@@ -300,7 +304,7 @@ export function CameraScanner({ onCapture, onClose, forObjectName }: CameraScann
                   Retake
                 </GlowButton>
                 <GlowButton variant="primary" size="md" onClick={handleConfirm} className="flex-1">
-                  {forObjectName ? 'Attach to Object' : 'Analyze Space'}
+                  {forObjectName ? 'Attach to Component' : 'Analyze Product'}
                 </GlowButton>
               </div>
             </div>
