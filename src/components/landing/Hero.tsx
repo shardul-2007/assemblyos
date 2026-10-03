@@ -59,7 +59,7 @@ export function Hero() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#8BE9FF] glow-pulse" />
               <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#8BE9FF]">
-                Spatial Assembly Intelligence
+                AI-Powered Spatial Intelligence
               </span>
             </motion.div>
 
@@ -69,7 +69,7 @@ export function Hero() {
               transition={{ delay: 0.3, duration: 0.7 }}
               className="text-[52px] sm:text-[64px] lg:text-[72px] font-bold leading-[1.02] tracking-tight text-[#F5F7FA] mb-6"
             >
-              Build it.
+              Photograph it.
               <br />
               <span
                 className="text-transparent bg-clip-text"
@@ -86,11 +86,10 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-[17px] leading-relaxed text-[rgba(245,247,250,0.58)] mb-10 max-w-[440px]"
+              className="text-[17px] leading-relaxed text-[rgba(245,247,250,0.58)] mb-10 max-w-[480px]"
             >
-              AssemblyOS transforms complex products into interactive 3D assembly
-              experiences with AI-guided instructions, spatial visualization and
-              intelligent verification.
+              AssemblyOS turns real spaces, workshops, machinery, and equipment into
+              interactive 3D digital twins with camera capture, AI vision, and spatial intelligence.
             </motion.p>
 
             <motion.div
@@ -156,8 +155,8 @@ export function Hero() {
               ))}
             </div>
             <div className="absolute top-3 right-3 z-10">
-              <span className="font-mono text-[10px] text-[rgba(245,247,250,0.38)] uppercase tracking-widest">
-                DRONE-X1 / DEMO
+              <span className="font-mono text-[10px] text-[#8BE9FF] uppercase tracking-widest">
+                PHOTO CAFÉ LOUNGE / LIVE TWIN
               </span>
             </div>
             <div className="absolute inset-0 scanline overflow-hidden z-10 pointer-events-none" />
@@ -169,8 +168,8 @@ export function Hero() {
               style={{ background: 'linear-gradient(to top, rgba(5,6,7,0.5), transparent)' }}
             />
             <div className="absolute bottom-3 left-4 z-10">
-              <span className="font-mono text-[10px] text-[rgba(245,247,250,0.38)] uppercase tracking-widest">
-                19 COMPONENTS / STEP 07 / 18
+              <span className="font-mono text-[10px] text-[rgba(245,247,250,0.45)] uppercase tracking-widest">
+                12 DETECTED ENTITIES / SEMANTIC READY
               </span>
             </div>
           </motion.div>

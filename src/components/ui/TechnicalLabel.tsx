@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 interface TechnicalLabelProps {
   children: ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   variant?: 'default' | 'accent' | 'success' | 'warning' | 'danger';
 }
 
@@ -18,10 +19,12 @@ const variants = {
 export function TechnicalLabel({
   children,
   className,
+  style,
   variant = 'default',
 }: TechnicalLabelProps) {
   return (
     <span
+      style={style}
       className={cn(
         'font-mono text-[10px] uppercase tracking-[0.1em]',
         variants[variant],
