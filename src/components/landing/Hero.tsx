@@ -59,7 +59,7 @@ export function Hero() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#8BE9FF] glow-pulse" />
               <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#8BE9FF]">
-                AI-Powered Spatial Intelligence
+                AI-Powered 3D Assembly Intelligence
               </span>
             </motion.div>
 
@@ -78,7 +78,7 @@ export function Hero() {
                     'linear-gradient(135deg, #8BE9FF 0%, rgba(245,247,250,0.9) 60%)',
                 }}
               >
-                Understand it.
+                Understand every part.
               </span>
             </motion.h1>
 
@@ -88,8 +88,8 @@ export function Hero() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-[17px] leading-relaxed text-[rgba(245,247,250,0.58)] mb-10 max-w-[480px]"
             >
-              AssemblyOS turns real spaces, workshops, machinery, and equipment into
-              interactive 3D digital twins with camera capture, AI vision, and spatial intelligence.
+              AssemblyOS turns physical machines and products into interactive 3D assemblies.
+              Explode components, inspect connections, remove parts, and understand how machines work.
             </motion.p>
 
             <motion.div
@@ -156,7 +156,7 @@ export function Hero() {
             </div>
             <div className="absolute top-3 right-3 z-10">
               <span className="font-mono text-[10px] text-[#8BE9FF] uppercase tracking-widest">
-                PHOTO CAFÉ LOUNGE / LIVE TWIN
+                DRONE-X1 / 3D ASSEMBLY
               </span>
             </div>
             <div className="absolute inset-0 scanline overflow-hidden z-10 pointer-events-none" />
@@ -169,7 +169,7 @@ export function Hero() {
             />
             <div className="absolute bottom-3 left-4 z-10">
               <span className="font-mono text-[10px] text-[rgba(245,247,250,0.45)] uppercase tracking-widest">
-                12 DETECTED ENTITIES / SEMANTIC READY
+                13 MECHANICAL PARTS / EXPLODED CAD READY
               </span>
             </div>
           </motion.div>

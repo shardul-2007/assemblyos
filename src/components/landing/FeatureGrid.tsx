@@ -8,42 +8,42 @@ const features = [
     icon: Box,
     number: '01',
     title: 'Interactive 3D Assembly',
-    description: 'Inspect every component from every angle. Orbit, zoom, and explore the complete assembly in real time.',
+    description: 'Inspect physical products and machinery from every angle. Explode, collapse, isolate, and orbit components in real time.',
     color: '#8BE9FF',
   },
   {
     icon: MessageSquare,
     number: '02',
     title: 'AI Assembly Copilot',
-    description: 'Ask questions naturally while you build. The copilot understands context, highlights parts, and guides every step.',
+    description: 'Ask questions about part dependencies, propulsion mechanics, and power routing. The copilot controls the 3D scene directly.',
     color: '#7DFFB2',
   },
   {
     icon: Layers,
     number: '03',
-    title: 'Exploded View',
-    description: 'Understand how every component fits together. Animate between assembled and exploded states fluidly.',
+    title: 'Camera Product Capture',
+    description: 'Photograph real devices or machinery with your device camera. AI identifies the product and matches reference 3D assemblies.',
     color: '#8BE9FF',
   },
   {
     icon: Eye,
     number: '04',
-    title: 'Visual Guidance',
-    description: 'See exactly where the next part belongs. Animated arrows, glowing highlights, and directional cues remove guesswork.',
+    title: 'Mechanical Part Operations',
+    description: 'Remove components to analyze downstream failures, swap compatible motors or batteries, and reassemble with full undo/redo.',
     color: '#FFD36A',
   },
   {
     icon: ShieldCheck,
     number: '05',
-    title: 'Assembly Verification',
-    description: 'Detect potential mistakes before they become problems. Simulated vision checks confirm placement and orientation.',
+    title: 'How It Works Mode',
+    description: 'Visualize functional relationships: battery to ESC power distribution, flight controller PID loops, and motor thrust.',
     color: '#7DFFB2',
   },
   {
     icon: Clock,
     number: '06',
-    title: 'Assembly Memory',
-    description: 'Replay and analyze the complete assembly process. Track time, corrections, and generate a full report.',
+    title: 'BOM & Assembly Reports',
+    description: 'Generate structured bill-of-materials, part numbers, mechanical joint definitions, and comprehensive JSON assembly reports.',
     color: '#8BE9FF',
   },
 ];
@@ -63,7 +63,7 @@ export function FeatureGrid() {
             Platform Capabilities
           </span>
           <h2 className="text-[40px] font-bold text-[#F5F7FA] tracking-tight">
-            Everything you need to assemble with confidence
+            Turn physical machines into interactive 3D assemblies
           </h2>
         </motion.div>
 

@@ -2,11 +2,11 @@
 import { motion } from 'framer-motion';
 
 const stages = [
-  { id: '01', label: 'SCAN', title: 'Import your product', description: 'Upload a GLB, GLTF, OBJ or STL model. AssemblyOS parses geometry, identifies components, and builds the assembly graph.', color: '#8BE9FF' },
-  { id: '02', label: 'UNDERSTAND', title: 'AI maps every part', description: 'Component detection assigns names, types, materials, and relationships. The AI builds a spatial model of the assembly.', color: '#7DFFB2' },
-  { id: '03', label: 'EXPLODE', title: 'Visualize the structure', description: 'Components separate into an exploded view. Every part, connector, and screw — laid out in spatial order.', color: '#FFD36A' },
-  { id: '04', label: 'GUIDE', title: 'Step-by-step instructions', description: 'Follow AI-generated assembly steps. The copilot highlights the next component, shows animations, and answers questions.', color: '#8BE9FF' },
-  { id: '05', label: 'VERIFY', title: 'Confirm and complete', description: 'Simulated verification checks component placement and orientation. Generate a full assembly report.', color: '#7DFFB2' },
+  { id: '01', label: 'CAPTURE', title: 'Photograph product', description: 'Point your camera at a real drone, device, or machine. Capture high-resolution visual input.', color: '#8BE9FF' },
+  { id: '02', label: 'IDENTIFY', title: 'AI product recognition', description: 'AI identifies the machine category, detects visible parts, and infers internal avionics & power units.', color: '#7DFFB2' },
+  { id: '03', label: 'MATCH', title: '3D assembly match', description: 'Matches visual evidence against reference CAD assemblies and structures components into a hierarchy.', color: '#FFD36A' },
+  { id: '04', label: 'EXPLODE', title: 'Explore & disassemble', description: 'Physically explode the product in 3D along assembly axes. Remove components and trace dependencies.', color: '#8BE9FF' },
+  { id: '05', label: 'UNDERSTAND', title: 'How it works mode', description: 'Inspect mechanical joints, trace power distribution & control loops, and ask the Assembly Copilot.', color: '#7DFFB2' },
 ];
 
 export function ProcessSection() {
@@ -25,7 +25,7 @@ export function ProcessSection() {
           className="mb-16 text-center"
         >
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#8BE9FF] mb-4 block">Process</span>
-          <h2 className="text-[40px] font-bold text-[#F5F7FA] tracking-tight">From parts to progress</h2>
+          <h2 className="text-[40px] font-bold text-[#F5F7FA] tracking-tight">From real photo to 3D assembly</h2>
         </motion.div>
 
         <div className="relative">

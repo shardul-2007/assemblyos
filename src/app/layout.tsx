@@ -15,22 +15,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'AssemblyOS — AI-Powered 3D Assembly Guidance',
+  title: 'AssemblyOS — AI-Powered Spatial Intelligence & Digital Twins',
   description:
-    'Explore, understand and assemble complex products through interactive 3D models and an AI-powered assembly copilot.',
-  keywords: ['3D assembly', 'AI guidance', 'product assembly', 'interactive 3D', 'spatial computing'],
+    'Turn real physical spaces, workshops, machinery, and equipment into interactive 3D digital twins with camera capture, AI vision, and spatial intelligence.',
+  keywords: ['spatial intelligence', 'digital twins', 'AI vision', 'industrial inspection', '3D digital twin', 'spatial computing'],
   openGraph: {
     title: 'AssemblyOS — AI that sees. Understands. Guides.',
     description:
-      'AssemblyOS transforms complex products into interactive 3D assembly experiences with AI-guided instructions, spatial visualization and intelligent verification.',
+      'AssemblyOS transforms physical rooms, machines, and equipment into interactive 3D digital twins with real-time camera scanning, AI vision, and spatial inspection.',
     type: 'website',
     siteName: 'AssemblyOS',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AssemblyOS — AI-Powered 3D Assembly Guidance',
+    title: 'AssemblyOS — AI-Powered Spatial Intelligence & Digital Twins',
     description:
-      'Interactive 3D assembly with AI copilot, exploded views, and visual guidance.',
+      'Interactive 3D digital twins with camera scan, multi-photo machine inspection, and spatial copilot.',
   },
   robots: { index: true, follow: true },
 };
