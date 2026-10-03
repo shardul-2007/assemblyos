@@ -10,6 +10,7 @@ import {
   Activity,
   Maximize2,
   Sparkles,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { AssemblyOSLogo } from '@/components/ui/AssemblyOSLogo';
 import { StatusDot } from '@/components/ui/StatusDot';
@@ -25,6 +26,12 @@ export function ProductTopBar() {
     isExploded,
     mode,
     setMode,
+    showSourceOverlay,
+    toggleSourceOverlay,
+    showGraphView,
+    toggleGraphView,
+    evidenceMode,
+    toggleEvidenceMode,
     undo,
     redo,
     historyIndex,
@@ -88,24 +95,69 @@ export function ProductTopBar() {
           <span>{isExploded ? 'Collapse' : 'Explode'}</span>
         </button>
 
+        {/* 2D Perception / Source Photo Toggle */}
+        <button
+          onClick={toggleSourceOverlay}
+          className={cn(
+            'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all',
+            showSourceOverlay
+              ? 'bg-[rgba(139,233,255,0.15)] text-[#8BE9FF] border border-[rgba(139,233,255,0.3)] font-bold'
+              : 'text-[rgba(245,247,250,0.7)] hover:text-[#F5F7FA] hover:bg-[rgba(255,255,255,0.05)]'
+          )}
+          title="Toggle 2D Image Annotations & Perception Overlay"
+        >
+          <ImageIcon size={13} />
+          <span>2D Perception</span>
+        </button>
+
+        {/* Machine Dependency Graph Toggle */}
+        <button
+          onClick={toggleGraphView}
+          className={cn(
+            'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all',
+            showGraphView
+              ? 'bg-[rgba(139,233,255,0.15)] text-[#8BE9FF] border border-[rgba(139,233,255,0.3)] font-bold'
+              : 'text-[rgba(245,247,250,0.7)] hover:text-[#F5F7FA] hover:bg-[rgba(255,255,255,0.05)]'
+          )}
+          title="Toggle Machine Dependency & Functional Graph"
+        >
+          <Activity size={13} />
+          <span>Graph</span>
+        </button>
+
+        {/* Evidence Mode Toggle */}
+        <button
+          onClick={toggleEvidenceMode}
+          className={cn(
+            'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all',
+            evidenceMode
+              ? 'bg-[rgba(255,211,106,0.15)] text-[#FFD36A] border border-[rgba(255,211,106,0.3)] font-bold'
+              : 'text-[rgba(245,247,250,0.7)] hover:text-[#F5F7FA] hover:bg-[rgba(255,255,255,0.05)]'
+          )}
+          title="Highlight Visible vs Inferred Parts"
+        >
+          <Sparkles size={13} />
+          <span>Evidence</span>
+        </button>
+
         {/* How It Works Mode Toggle */}
         <button
           onClick={() => setMode(mode === 'how-it-works' ? 'inspect' : 'how-it-works')}
           className={cn(
-            'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all',
+            'flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all',
             mode === 'how-it-works'
               ? 'bg-[rgba(125,255,178,0.15)] text-[#7DFFB2] border border-[rgba(125,255,178,0.3)] font-bold'
               : 'text-[rgba(245,247,250,0.7)] hover:text-[#F5F7FA] hover:bg-[rgba(255,255,255,0.05)]'
           )}
         >
           <Activity size={13} />
-          <span>How It Works</span>
+          <span>Flow</span>
         </button>
 
         {/* Export Assembly Report */}
         <button
           onClick={openExportModal}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium text-[rgba(245,247,250,0.7)] hover:text-[#F5F7FA] hover:bg-[rgba(255,255,255,0.05)] transition-colors"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[rgba(245,247,250,0.7)] hover:text-[#F5F7FA] hover:bg-[rgba(255,255,255,0.05)] transition-colors"
         >
           <FileDown size={13} />
           <span>Export</span>

@@ -16,11 +16,13 @@ export const DRONE_PARTS: Part[] = [
     color: '#1A2333',
     emissiveColor: '#0066AA',
     parentId: undefined,
-    childrenIds: ['arm-fl', 'arm-fr', 'arm-rl', 'arm-rr', 'fc', 'battery', 'camera'],
+    childrenIds: ['motor-fl', 'motor-fr', 'motor-rl', 'motor-rr', 'fc', 'battery', 'camera'],
     dependencies: ['fc', 'battery'],
     connections: [],
     visibility: 'visible',
     detectionConfidence: 0.98,
+    evidenceRationale: 'High-contrast rigid carbon airframe clearly detected in center frame area.',
+    boundingBox: { x: 0.28, y: 0.32, width: 0.44, height: 0.36 },
     status: 'installed',
     photos: [],
     replacementOptions: [
@@ -51,6 +53,8 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.96,
+    evidenceRationale: 'Observed mounted at the terminus of front-left carbon arm.',
+    boundingBox: { x: 0.16, y: 0.18, width: 0.14, height: 0.16 },
     status: 'installed',
     photos: [],
     replacementOptions: [
@@ -81,8 +85,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.96,
+    evidenceRationale: 'Observed mounted at the terminus of front-right carbon arm.',
+    boundingBox: { x: 0.70, y: 0.18, width: 0.14, height: 0.16 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'motor-rl',
@@ -107,8 +113,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.95,
+    evidenceRationale: 'Observed mounted at the terminus of rear-left carbon arm.',
+    boundingBox: { x: 0.16, y: 0.64, width: 0.14, height: 0.16 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'motor-rr',
@@ -133,8 +141,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.95,
+    evidenceRationale: 'Observed mounted at the terminus of rear-right carbon arm.',
+    boundingBox: { x: 0.70, y: 0.64, width: 0.14, height: 0.16 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'prop-fl',
@@ -159,8 +169,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.99,
+    evidenceRationale: 'Tri-blade rotor disc profile visible above front-left motor hub.',
+    boundingBox: { x: 0.08, y: 0.10, width: 0.26, height: 0.26 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'prop-fr',
@@ -185,8 +197,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.99,
+    evidenceRationale: 'Tri-blade rotor disc profile visible above front-right motor hub.',
+    boundingBox: { x: 0.66, y: 0.10, width: 0.26, height: 0.26 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'prop-rl',
@@ -211,8 +225,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.98,
+    evidenceRationale: 'Tri-blade rotor disc profile visible above rear-left motor hub.',
+    boundingBox: { x: 0.08, y: 0.58, width: 0.26, height: 0.26 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'prop-rr',
@@ -237,8 +253,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.98,
+    evidenceRationale: 'Tri-blade rotor disc profile visible above rear-right motor hub.',
+    boundingBox: { x: 0.66, y: 0.58, width: 0.26, height: 0.26 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'fc',
@@ -264,8 +282,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'inferred',
     detectionConfidence: 0.88,
+    evidenceRationale: 'Inferred from internal 30x30 stack configuration and telemetry antenna.',
+    boundingBox: { x: 0.42, y: 0.42, width: 0.16, height: 0.16 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'esc',
@@ -291,8 +311,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'inferred',
     detectionConfidence: 0.82,
+    evidenceRationale: 'Inferred from 4-corner heavy gauge silicone wiring harness to brushless motors.',
+    boundingBox: { x: 0.40, y: 0.40, width: 0.20, height: 0.20 },
     status: 'installed',
-    photos: [],
+    photos: []
   },
   {
     id: 'battery',
@@ -318,6 +340,8 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.94,
+    evidenceRationale: 'High-density LiPo pack strapped to top plate with XT60 connector.',
+    boundingBox: { x: 0.38, y: 0.52, width: 0.24, height: 0.30 },
     status: 'installed',
     photos: [],
     replacementOptions: [
@@ -348,8 +372,10 @@ export const DRONE_PARTS: Part[] = [
     ],
     visibility: 'visible',
     detectionConfidence: 0.92,
+    evidenceRationale: 'Conical optical lens and TPU protective cage visible at front nose of airframe.',
+    boundingBox: { x: 0.44, y: 0.22, width: 0.12, height: 0.12 },
     status: 'installed',
-    photos: [],
+    photos: []
   }
 ];
 

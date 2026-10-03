@@ -31,6 +31,11 @@ interface ProductAssemblyStore {
   showAnalysisModal: boolean;
   showExportModal: boolean;
 
+  // View Modes & Intelligence Layers
+  showSourceOverlay: boolean;
+  showGraphView: boolean;
+  evidenceMode: boolean;
+
   // Actions — Part Operations
   selectPart: (id: string | null) => void;
   highlightParts: (ids: string[]) => void;
@@ -45,6 +50,12 @@ interface ProductAssemblyStore {
   setExplodedProgress: (progress: number) => void;
   toggleExploded: () => void;
   setMode: (mode: ProductMode) => void;
+  toggleSourceOverlay: () => void;
+  setSourceOverlay: (v: boolean) => void;
+  toggleGraphView: () => void;
+  setGraphView: (v: boolean) => void;
+  toggleEvidenceMode: () => void;
+  setEvidenceMode: (v: boolean) => void;
   resetAssembly: () => void;
   reassembleAll: () => void;
   
@@ -78,6 +89,11 @@ export const useProductAssemblyStore = create<ProductAssemblyStore>()(
     explodedProgress: 0,
     isExploded: false,
     mode: 'inspect',
+
+    // View Modes & Intelligence Layers
+    showSourceOverlay: false,
+    showGraphView: false,
+    evidenceMode: false,
     
     history: [{ parts: DRONE_PARTS.map(p => ({ ...p })), explodedProgress: 0 }],
     historyIndex: 0,
@@ -146,6 +162,13 @@ export const useProductAssemblyStore = create<ProductAssemblyStore>()(
     },
 
     setMode: (mode) => set({ mode }),
+
+    toggleSourceOverlay: () => set((s) => ({ showSourceOverlay: !s.showSourceOverlay })),
+    setSourceOverlay: (v) => set({ showSourceOverlay: v }),
+    toggleGraphView: () => set((s) => ({ showGraphView: !s.showGraphView })),
+    setGraphView: (v) => set({ showGraphView: v }),
+    toggleEvidenceMode: () => set((s) => ({ evidenceMode: !s.evidenceMode })),
+    setEvidenceMode: (v) => set({ evidenceMode: v }),
 
     resetAssembly: () => set({
       parts: DRONE_PARTS.map(p => ({ ...p, status: 'installed' as const })),

@@ -10,6 +10,8 @@ import { ProductAnalysisModal } from '@/components/assembly/ProductAnalysisModal
 import { ProductAssemblyReport } from '@/components/assembly/ProductAssemblyReport';
 import { CameraScanner } from '@/components/spatial/CameraScanner';
 import { ScanAnalysis } from '@/components/spatial/ScanAnalysis';
+import { SourceImageOverlay } from '@/components/assembly/SourceImageOverlay';
+import { MachineGraphVisualizer } from '@/components/assembly/MachineGraphVisualizer';
 import { useProductAssemblyStore } from '@/store/productAssemblyStore';
 import { analyzeProductImage } from '@/lib/vision/productVisionService';
 
@@ -45,6 +47,10 @@ export default function WorkspacePage() {
     showExportModal,
     closeExportModal,
     applyAnalysisAssembly,
+    showSourceOverlay,
+    setSourceOverlay,
+    showGraphView,
+    setGraphView,
     selectedPartId,
     attachPhotoToPart,
     undo,
@@ -106,40 +112,50 @@ export default function WorkspacePage() {
       {/* Top Bar with prominent Capture button, Explode, and Undo/Redo */}
       <ProductTopBar />
 
-      {/* Main 3-Column Workspace */}
+      {/* Main Workspace (3-Column or Split-View) */}
       <div className="flex flex-1 overflow-hidden relative">
         {/* Left: Product Assembly Hierarchy Tree */}
         <aside className="w-72 lg:w-80 flex-shrink-0 hidden md:block">
           <ProductAssemblyTree />
         </aside>
 
-        {/* Center: 3D Drone Assembly Viewer */}
-        <main className="flex-1 relative overflow-hidden">
-          <DroneAssemblyViewer />
+        {/* Center: 3D Drone Assembly Viewer (with optional 2D Perception Split View) */}
+        <main className="flex-1 relative overflow-hidden flex flex-col md:flex-row">
+          {/* Split Pane: 2D Perception & Bounding Box Annotation */}
+          {showSourceOverlay && (
+            <div className="w-full md:w-1/2 h-1/2 md:h-full border-r border-[rgba(255,255,255,0.06)] flex-shrink-0 z-10">
+              <SourceImageOverlay onClose={() => setSourceOverlay(false)} />
+            </div>
+          )}
 
-          {/* Part Inspector Floating Overlay */}
-          <ProductPartInspector />
+          {/* 3D Scene Container */}
+          <div className="flex-1 h-full relative overflow-hidden">
+            <DroneAssemblyViewer />
 
-          {/* Bottom Quick Controls Bar: Explode Slider, Reassemble, Undo/Redo */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3 px-4 py-2 rounded-2xl bg-[#080b0f]/85 border border-[rgba(255,255,255,0.08)] backdrop-blur shadow-2xl">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-[rgba(245,247,250,0.4)]">
-              EXPLODE
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={explodedProgress}
-              onChange={(e) => setExplodedProgress(parseFloat(e.target.value))}
-              className="w-32 h-1 accent-[#8BE9FF] cursor-pointer"
-            />
-            <button
-              onClick={reassembleAll}
-              className="px-2.5 py-1 rounded-lg bg-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.08)] font-mono text-[9px] uppercase tracking-wider text-[#8BE9FF] transition-colors"
-            >
-              Reassemble
-            </button>
+            {/* Part Inspector Floating Overlay */}
+            <ProductPartInspector />
+
+            {/* Bottom Quick Controls Bar: Explode Slider, Reassemble */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3 px-4 py-2 rounded-2xl bg-[#080b0f]/85 border border-[rgba(255,255,255,0.08)] backdrop-blur shadow-2xl">
+              <span className="font-mono text-[9px] uppercase tracking-wider text-[rgba(245,247,250,0.4)]">
+                EXPLODE
+              </span>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={explodedProgress}
+                onChange={(e) => setExplodedProgress(parseFloat(e.target.value))}
+                className="w-32 h-1 accent-[#8BE9FF] cursor-pointer"
+              />
+              <button
+                onClick={reassembleAll}
+                className="px-2.5 py-1 rounded-lg bg-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.08)] font-mono text-[9px] uppercase tracking-wider text-[#8BE9FF] transition-colors"
+              >
+                Reassemble
+              </button>
+            </div>
           </div>
         </main>
 
@@ -149,7 +165,7 @@ export default function WorkspacePage() {
         </aside>
       </div>
 
-      {/* Modals & Capture Pipelines */}
+      {/* Modals & Overlays */}
       <AnimatePresence>
         {/* 1. Real Camera Scanner */}
         {showCamera && (
@@ -173,7 +189,10 @@ export default function WorkspacePage() {
           <ProductAnalysisModal
             analysis={analysisResult}
             imageUrl={capturedImageUrl}
-            onConfirm={() => applyAnalysisAssembly('drone-x1')}
+            onConfirm={() => {
+              applyAnalysisAssembly('drone-x1');
+              setSourceOverlay(true);
+            }}
             onCancel={closeAnalysisModal}
           />
         )}
@@ -181,6 +200,15 @@ export default function WorkspacePage() {
         {/* 4. Assembly Report Modal */}
         {showExportModal && (
           <ProductAssemblyReport onClose={closeExportModal} />
+        )}
+
+        {/* 5. Machine Topology & Dependency Graph Overlay */}
+        {showGraphView && (
+          <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-md">
+            <div className="w-full max-w-5xl h-[85vh]">
+              <MachineGraphVisualizer onClose={() => setGraphView(false)} />
+            </div>
+          </div>
         )}
       </AnimatePresence>
     </div>

@@ -30,6 +30,13 @@ export interface PartConnection {
   isSecured: boolean;
 }
 
+export interface BoundingBox2D {
+  x: number;      // 0 - 1 normalized
+  y: number;      // 0 - 1 normalized
+  width: number;  // 0 - 1 normalized
+  height: number; // 0 - 1 normalized
+}
+
 export interface Part {
   id: string;
   name: string;
@@ -55,6 +62,8 @@ export interface Part {
   // Detection classification
   visibility: PartVisibility;
   detectionConfidence: number;  // 0 - 1
+  evidenceRationale?: string;
+  boundingBox?: BoundingBox2D;
   
   // State
   status: PartStatus;

@@ -24,6 +24,7 @@ interface PartMeshProps {
   isSelected: boolean;
   isHighlighted: boolean;
   isIsolated: boolean;
+  evidenceMode: boolean;
   onSelect: (id: string) => void;
 }
 
@@ -33,6 +34,7 @@ function PartMesh({
   isSelected,
   isHighlighted,
   isIsolated,
+  evidenceMode,
   onSelect,
 }: PartMeshProps) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -43,7 +45,7 @@ function PartMesh({
 
   useFrame(() => {
     if (!meshRef.current) return;
-    
+
     // If part was removed, animate it dropping/moving away
     if (part.status === 'removed') {
       meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, -4, 0.05);
@@ -58,11 +60,13 @@ function PartMesh({
     const mat = meshRef.current.material as THREE.MeshStandardMaterial;
     if (mat) {
       const targetIntensity = isSelected
-        ? 0.8
+        ? 0.85
         : isHighlighted
-        ? 0.6
+        ? 0.65
         : hovered
-        ? 0.35
+        ? 0.4
+        : evidenceMode && part.visibility === 'inferred'
+        ? 0.5
         : part.emissiveColor
         ? 0.15
         : 0;
@@ -93,6 +97,22 @@ function PartMesh({
   };
 
   const isDimmed = isIsolated && !isSelected;
+  const isInferred = part.visibility === 'inferred';
+
+  // Material color adjustments in evidence mode
+  const displayColor = evidenceMode
+    ? isInferred
+      ? '#D97706' // amber for inferred
+      : '#059669' // emerald for visible
+    : isDimmed
+    ? '#334155'
+    : part.color;
+
+  const displayEmissive = evidenceMode
+    ? isInferred
+      ? '#FFD36A'
+      : '#7DFFB2'
+    : part.emissiveColor ?? part.color;
 
   return (
     <group>
@@ -113,13 +133,14 @@ function PartMesh({
       >
         {getGeometry()}
         <meshStandardMaterial
-          color={isDimmed ? '#334155' : part.color}
-          emissive={part.emissiveColor ?? part.color}
+          color={displayColor}
+          emissive={displayEmissive}
           emissiveIntensity={0.15}
-          metalness={part.category === 'motor' ? 0.8 : 0.4}
+          metalness={evidenceMode ? 0.3 : part.category === 'motor' ? 0.8 : 0.4}
           roughness={part.category === 'motor' ? 0.2 : 0.5}
-          transparent={isDimmed}
-          opacity={isDimmed ? 0.25 : 1}
+          transparent={isDimmed || (evidenceMode && isInferred)}
+          opacity={isDimmed ? 0.25 : evidenceMode && isInferred ? 0.7 : 1}
+          wireframe={evidenceMode && isInferred}
         />
 
         {/* Selection ring */}
@@ -130,7 +151,15 @@ function PartMesh({
           </mesh>
         )}
 
-        {/* Hover / Label Overlay */}
+        {/* Evidence Indicator Halo when in Evidence Mode */}
+        {evidenceMode && !isDimmed && (
+          <mesh position={[0, 0.2, 0]}>
+            <torusGeometry args={[0.3, 0.008, 6, 24]} />
+            <meshBasicMaterial color={isInferred ? '#FFD36A' : '#7DFFB2'} transparent opacity={0.6} />
+          </mesh>
+        )}
+
+        {/* Hover / Selection Label Overlay */}
         {(hovered || isHighlighted || isSelected) && (
           <Html center distanceFactor={10}>
             <div
@@ -141,7 +170,11 @@ function PartMesh({
                   ? 'rgba(0,140,255,0.9)'
                   : 'rgba(5,6,7,0.85)',
                 color: isSelected ? '#050607' : '#F5F7FA',
-                border: '1px solid rgba(255,255,255,0.2)',
+                border: isSelected
+                  ? '1px solid #8BE9FF'
+                  : isInferred
+                  ? '1px dashed #FFD36A'
+                  : '1px solid rgba(255,255,255,0.2)',
                 borderRadius: 6,
                 padding: '4px 10px',
                 fontSize: 10,
@@ -151,9 +184,26 @@ function PartMesh({
                 whiteSpace: 'nowrap',
                 pointerEvents: 'none',
                 boxShadow: '0 0 15px rgba(0,0,0,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
               }}
             >
-              {part.name.toUpperCase()} {part.status === 'removed' ? '(REMOVED)' : ''}
+              <span>{part.name.toUpperCase()}</span>
+              <span
+                style={{
+                  fontSize: 8,
+                  padding: '1px 4px',
+                  borderRadius: 3,
+                  background: isInferred ? 'rgba(255,211,106,0.3)' : 'rgba(125,255,178,0.3)',
+                  color: isInferred ? '#FFD36A' : '#7DFFB2',
+                }}
+              >
+                {isInferred ? 'INFERRED' : 'VISIBLE'}
+              </span>
+              {part.status === 'removed' && (
+                <span style={{ color: '#FF7F8A', fontWeight: 'bold' }}>✕ DETACHED</span>
+              )}
             </div>
           </Html>
         )}
@@ -206,8 +256,11 @@ export function DroneAssemblyViewer() {
     isolatedPartId,
     explodedProgress,
     mode,
+    evidenceMode,
     selectPart,
   } = useProductAssemblyStore();
+
+  const detachedCount = parts.filter((p) => p.status === 'removed').length;
 
   return (
     <div className="relative w-full h-full bg-[#050607] select-none">
@@ -250,6 +303,7 @@ export function DroneAssemblyViewer() {
             isSelected={selectedPartId === part.id}
             isHighlighted={highlightedPartIds.includes(part.id)}
             isIsolated={isolatedPartId !== null && isolatedPartId !== part.id}
+            evidenceMode={evidenceMode}
             onSelect={selectPart}
           />
         ))}
@@ -268,8 +322,8 @@ export function DroneAssemblyViewer() {
       </Canvas>
 
       {/* Floating Status Badge */}
-      <div className="absolute top-4 left-4 z-10 pointer-events-none">
-        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#080b0f]/80 border border-[rgba(255,255,255,0.08)] backdrop-blur">
+      <div className="absolute top-4 left-4 z-10 pointer-events-none flex flex-col gap-1.5">
+        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#080b0f]/80 border border-[rgba(255,255,255,0.08)] backdrop-blur shadow-lg">
           <span className="w-2 h-2 rounded-full bg-[#8BE9FF] animate-pulse" />
           <span className="font-mono text-[10px] text-[#F5F7FA] font-bold uppercase tracking-wider">
             DRONE-X1 ASSEMBLY
@@ -278,6 +332,19 @@ export function DroneAssemblyViewer() {
             · {parts.filter((p) => p.status === 'installed').length}/{parts.length} INSTALLED
           </span>
         </div>
+
+        {evidenceMode && (
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 backdrop-blur font-mono text-[9px] text-[#FFD36A]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FFD36A] animate-ping" />
+            <span>EVIDENCE MODE: Solid Green = Visible / Wireframe Amber = Inferred</span>
+          </div>
+        )}
+
+        {detachedCount > 0 && (
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-red-500/10 border border-red-500/30 backdrop-blur font-mono text-[9px] text-red-400">
+            <span>{detachedCount} PART{detachedCount > 1 ? 'S' : ''} DETACHED (USE REASSEMBLE TO RESTORE)</span>
+          </div>
+        )}
       </div>
     </div>
   );
