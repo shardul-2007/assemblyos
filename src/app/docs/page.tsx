@@ -5,35 +5,63 @@ import { TechnicalLabel } from '@/components/ui/TechnicalLabel';
 
 const sections = [
   {
-    title: 'Getting Started',
+    title: 'Machine Understanding & Spatial Intelligence',
     items: [
-      { heading: 'Quick Start', body: 'Visit /workspace/demo to launch the DRONE-X1 interactive assembly immediately — no login, no API key required.' },
-      { heading: 'Import a Model', body: 'Navigate to /workspace/import and drag in a .glb or .gltf file. The system will analyze geometry and build an assembly graph.' },
-      { heading: 'Keyboard Shortcuts', body: 'N — Next step   P — Previous step   E — Toggle explode   R — Reset   F — Show Me animation   V — Verification   C — Copilot   ESC — Close panels' },
+      {
+        heading: 'Physical Product Recognition',
+        body: 'Click "Capture Product" to photograph physical machines (drones, phones, cameras, motors, tools). AssemblyOS analyzes visible components and infers internal architectures.',
+      },
+      {
+        heading: 'Bi-Directional 2D ↔ 3D Correspondence',
+        body: 'Toggle "2D Perception" to open the split workbench. Clicking any 2D bounding box on the source photo focuses that component in 3D and opens the Part Inspector. Clicking a 3D component highlights its 2D bounding box.',
+      },
+      {
+        heading: 'Machine Topology & Dependency Graph',
+        body: 'Click "Graph" in the top bar to inspect the 4-stage DAG. Detaching parts (e.g. Battery) dynamically propagates failures ([NO PWR], [OFFLINE]) down to affected systems.',
+      },
+      {
+        heading: '3D Evidence Grounding',
+        body: 'Toggle "Evidence" to highlight visible components in solid metallic green and inferred internal electronics (Flight Controller, ESC) in amber wireframe with holographic HUD badges.',
+      },
     ],
   },
   {
-    title: 'AI Copilot',
+    title: 'Interactive 3D Assembly Operations',
     items: [
-      { heading: 'Demo Mode', body: 'Without an API key the copilot uses a deterministic keyword-matching assistant. All core features work fully in demo mode.' },
-      { heading: 'Enabling Real AI', body: 'Add AI_GATEWAY_API_KEY=<your-openai-key> to your .env.local file and restart the dev server.' },
-      { heading: 'Structured Actions', body: 'AI responses can trigger 3D viewer actions: highlightComponent, focusComponent, setExplodedView, setAssemblyStep, showAssemblyAnimation, verifyAssembly. Actions are validated with Zod before execution.' },
+      {
+        heading: 'Mechanical Operations',
+        body: '• Explode / Collapse: Separate parts along assembly axes.\n• Detach / Reattach: Disassemble components to inspect mounting joints.\n• Isolate: Focus on a single component while dimming the rest.\n• Swap / Replace: Test compatible alternative modules.\n• Attach Photos: Photograph physical component serials and labels directly into the part card.',
+      },
+      {
+        heading: 'Keyboard Shortcuts',
+        body: '• E — Toggle Exploded View\n• Ctrl + Z — Undo assembly modification\n• Ctrl + Shift + Z — Redo assembly modification\n• ESC — Deselect active component',
+      },
     ],
   },
   {
-    title: 'Verification System',
+    title: 'AI Assembly Copilot',
     items: [
-      { heading: 'Demo Simulation', body: 'The camera verification panel runs a simulated scan. It is clearly labeled DEMO MODE and does not use real computer vision.' },
-      { heading: 'Confidence Score', body: 'The percentage is simulated. It does not represent a real engineering certification or safety guarantee.' },
+      {
+        heading: 'Context-Aware Assistance',
+        body: 'Ask natural language queries like "Show me the motors", "Where is the FPV Camera?", "What happens if I remove the battery?", or "Show how it works". The Copilot answers with engineering specifications and executes 3D actions in real time.',
+      },
+      {
+        heading: 'AI Provider Integration',
+        body: 'Works fully client-side with deterministic engineering knowledge. Add OPENAI_API_KEY or AI_GATEWAY_API_KEY to .env.local to enable real-time Vercel AI SDK inference.',
+      },
     ],
   },
   {
-    title: 'Tech Stack',
+    title: 'Architecture & Tech Stack',
     items: [
-      { heading: 'Framework', body: 'Next.js 16 App Router · TypeScript · Tailwind CSS v4 · Framer Motion' },
-      { heading: '3D Engine', body: 'React Three Fiber · Three.js · @react-three/drei — procedural DRONE-X1 mesh (no external assets required)' },
-      { heading: 'State', body: 'Zustand with devtools middleware — all assembly state is client-side' },
-      { heading: 'AI', body: 'Vercel AI SDK with provider abstraction. Falls back to local demo assistant when no API key is set.' },
+      {
+        heading: 'Frontend & 3D Engine',
+        body: 'Next.js 16 (App Router) · React 19 · React Three Fiber · Three.js · Framer Motion · Tailwind CSS v4',
+      },
+      {
+        heading: 'State & Canonical Data',
+        body: 'Zustand state store with MachineGraph canonical ground truth schemas and undo/redo history stacks.',
+      },
     ],
   },
 ];
@@ -44,10 +72,12 @@ export default function DocsPage() {
       <Nav />
       <div className="pt-28 pb-20 max-w-[900px] mx-auto px-6">
         <div className="mb-12">
-          <TechnicalLabel className="mb-3 block" variant="accent">Documentation</TechnicalLabel>
-          <h1 className="text-[40px] font-bold text-[#F5F7FA] tracking-tight">AssemblyOS Docs</h1>
-          <p className="text-[16px] text-[rgba(245,247,250,0.5)] mt-3 max-w-[520px]">
-            Reference guide for the AssemblyOS platform — workspace, AI copilot, verification, and developer setup.
+          <TechnicalLabel className="mb-3 block" variant="accent">
+            Documentation &amp; Architecture
+          </TechnicalLabel>
+          <h1 className="text-[40px] font-bold text-[#F5F7FA] tracking-tight">AssemblyOS Reference</h1>
+          <p className="text-[16px] text-[rgba(245,247,250,0.5)] mt-3 max-w-[560px]">
+            Comprehensive guide to AssemblyOS — machine understanding, 2D perception overlay, 3D digital assemblies, and AI copilot.
           </p>
         </div>
 
@@ -61,7 +91,9 @@ export default function DocsPage() {
                 {section.items.map((item) => (
                   <GlassPanel key={item.heading} className="p-4">
                     <h3 className="text-[14px] font-semibold text-[#F5F7FA] mb-1.5">{item.heading}</h3>
-                    <p className="text-[13px] text-[rgba(245,247,250,0.5)] leading-relaxed whitespace-pre-line">{item.body}</p>
+                    <p className="text-[13px] text-[rgba(245,247,250,0.5)] leading-relaxed whitespace-pre-line">
+                      {item.body}
+                    </p>
                   </GlassPanel>
                 ))}
               </div>
